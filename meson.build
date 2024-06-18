@@ -12,7 +12,12 @@ else
 endif
 
 #build by cargo
-run_command(cargo,'build','--release')
+r = run_command(cargo,'build','--release')
+
+output = r.stdout().strip()
+errortxt = r.stderr().strip()
+message(output)
+message(errortxt)
 #mark cargo artifact to static library
 wgpu_native = static_library('wgpu_native', objects : lib_path, install : true)
 
@@ -27,4 +32,4 @@ pkg.generate(name : 'wgpu-native',
              libraries : [wgpu_native],
              version : meson.project_version(),
              )
-install_subdir('include', install_dir : '')
+#install_subdir('include', install_dir : '')
